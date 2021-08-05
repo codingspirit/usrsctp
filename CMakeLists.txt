@@ -28,9 +28,12 @@
 # OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 # SUCH DAMAGE.
 #
+set(CMAKE_C_COMPILER_WORKS 1)
+set(CMAKE_CXX_COMPILER_WORKS 1)
 
 project(usrsctplib C)
 cmake_minimum_required(VERSION 3.0)
+
 
 # Debug build type as default
 if (NOT CMAKE_BUILD_TYPE)
@@ -125,12 +128,13 @@ endif ()
 # CHECK STRUCT MEMBERS
 #################################################
 
-set(CMAKE_REQUIRED_INCLUDES "${CMAKE_CURRENT_SOURCE_DIR}/usrsctplib")
+set(CMAKE_REQUIRED_INCLUDES "${CMAKE_REQUIRED_INCLUDES} ${CMAKE_CURRENT_SOURCE_DIR}/usrsctplib")
 
-check_include_file(usrsctp.h have_usrsctp_h)
-if (NOT have_usrsctp_h)
-	message(FATAL_ERROR "usrsctp.h not found")
-endif ()
+# check_include_file(usrsctp.h have_usrsctp_h)
+# if (NOT have_usrsctp_h)
+# 	message(STATUS "CMAKE_REQUIRED_INCLUDES is ${CMAKE_REQUIRED_INCLUDES}")
+# 	message(FATAL_ERROR "usrsctp.h not found at ${CMAKE_CURRENT_SOURCE_DIR}/usrsctplib")
+# endif ()
 
 check_struct_has_member("struct sockaddr" "sa_len" "sys/types.h;sys/socket.h" have_sa_len)
 if (have_sa_len)
